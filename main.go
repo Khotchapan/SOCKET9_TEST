@@ -1,5 +1,3 @@
-// You can edit this code!
-// Click here and start typing.
 package main
 
 import (
@@ -35,6 +33,6 @@ func main() {
 			//fmt.Println("The year isn't a leap year!")
 		}
 	}
-	fmt.Println(totalDay, "days")
+	//fmt.Println(totalDay, "days")
 	fmt.Println("Today is Monday", days[totalDay%7])
 }
