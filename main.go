@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	input := "23,01,2023"
+	input := "01,01,2023"
 	text := strings.Split(input, ",")
 	dayNames := [7]string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
 	monthCount := [12]int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
@@ -33,8 +33,6 @@ func main() {
 
 	if dateInt[2]%4 == 0 && dateInt[2]%100 != 0 || dateInt[2]%400 == 0 {
 		monthCount[1] = 29
-	} else {
-		monthCount[1] = 28
 	}
 
 	for month := 0; month < dateInt[1]-1; month++ {
