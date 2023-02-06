@@ -64,10 +64,10 @@ func ValidateData(data []int) error {
 	if IsValidLeapYear(data[2]) && IsNotDurationLeapYear(data[0], data[1]) {
 		return fmt.Errorf("Error Not within the specified date 4")
 	}
-	if data[1] < 1 || data[1] > 12 {
+	if IsDurationMonth(data[1]) {
 		return fmt.Errorf("Error Not within the specified month")
 	}
-	if data[2] < 1900 {
+	if IsDurationYear(data[2]) {
 		return fmt.Errorf("Error Not within the specified year")
 	}
 
@@ -129,8 +129,14 @@ func IsNotDurationLeapYear(day, month int) bool {
 	}
 	return false
 }
-func IsDurationMonth(day int) bool {
-	if day < 1 || day > 30 {
+func IsDurationMonth(month int) bool {
+	if month < 1 || month > 12 {
+		return true
+	}
+	return false
+}
+func IsDurationYear(year int) bool {
+	if year < 1900 {
 		return true
 	}
 	return false
