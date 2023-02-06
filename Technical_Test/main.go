@@ -24,20 +24,21 @@ func main() {
 		}
 		dateInt = append(dateInt, temp)
 	}
-	if err := Validate(dateInt); err != nil {
+
+	if err := ValidateData(dateInt); err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	for year := 1900; year < dateInt[2]; year++ {
-		if IsLeapYear(year) {
+		if IsValidLeapYear(year) {
 			totalDay += 366
 		} else {
 			totalDay += 365
 		}
 	}
 
-	if IsLeapYear(dateInt[2]) {
+	if IsValidLeapYear(dateInt[2]) {
 		monthCount[1] = 29
 	}
 
@@ -49,22 +50,23 @@ func main() {
 	fmt.Println("Today is", dayNames[totalDay%7])
 }
 
-func Validate(data []int) error {
+func ValidateData(data []int) error {
 
-	if data[0] < 0 || data[0] > 31 {
-		return fmt.Errorf("Error Not within the specified date")
+	if IsThirtyFirstDay(data[0]) && IsDurationThirtyFirstDay(data[0]) {
+		return fmt.Errorf("Error Not within the specified date 1")
 	}
-	if !IsLeapYear(data[2]) && data[1] == 2 && data[0] > 28 {
-		return fmt.Errorf("Error Not within the specified date")
+	if IsThirtiethDay(data[0]) && IsDurationThirtiethDay(data[0]) {
+		return fmt.Errorf("Error Not within the specified date 2")
 	}
-	if IsLeapYear(data[2]) && data[1] == 2 && data[0] > 29 {
-		return fmt.Errorf("Error Not within the specified date")
+	if !IsValidLeapYear(data[2]) && IsDurationLeapYear(data[0], data[1]) {
+		return fmt.Errorf("Error Not within the specified date 3")
 	}
-
-	if data[1] < 0 || data[1] > 12 {
+	if IsValidLeapYear(data[2]) && IsNotDurationLeapYear(data[0], data[1]) {
+		return fmt.Errorf("Error Not within the specified date 4")
+	}
+	if data[1] < 1 || data[1] > 12 {
 		return fmt.Errorf("Error Not within the specified month")
 	}
-
 	if data[2] < 1900 {
 		return fmt.Errorf("Error Not within the specified year")
 	}
@@ -72,8 +74,63 @@ func Validate(data []int) error {
 	return nil
 }
 
-func IsLeapYear(year int) bool {
+func IsValidLeapYear(year int) bool {
 	if year%4 == 0 && (year%100 != 0 || year%400 == 0) {
+		return true
+	}
+	return false
+}
+
+func IsThirtiethDay(day int) bool {
+	thirtieth := []int{1, 3, 5, 7, 8, 10, 12}
+	length := len(thirtieth)
+	for i := 0; i < length; i++ {
+		if thirtieth[i] == day {
+			return true
+		}
+	}
+	return false
+}
+
+func IsThirtyFirstDay(day int) bool {
+	thirtyFirst := []int{4, 6, 9, 11}
+	length := len(thirtyFirst)
+	for i := 0; i < length; i++ {
+		if thirtyFirst[i] == day {
+			return true
+		}
+	}
+	return false
+}
+
+func IsDurationThirtiethDay(day int) bool {
+	if day < 1 || day > 30 {
+		return true
+	}
+	return false
+}
+
+func IsDurationThirtyFirstDay(day int) bool {
+	if day < 1 || day > 31 {
+		return true
+	}
+	return false
+}
+
+func IsDurationLeapYear(day, month int) bool {
+	if month == 2 && day < 1 || day > 28 {
+		return true
+	}
+	return false
+}
+func IsNotDurationLeapYear(day, month int) bool {
+	if month == 2 && day < 1 || day > 29 {
+		return true
+	}
+	return false
+}
+func IsDurationMonth(day int) bool {
+	if day < 1 || day > 30 {
 		return true
 	}
 	return false
