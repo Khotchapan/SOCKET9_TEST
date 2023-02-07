@@ -13,7 +13,7 @@ func main() {
 	text := strings.Split(input, "/")
 	dayNames := [7]string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
 	monthCount := [12]int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
-	dateInt := []int{}
+	dateInt := []int{} //dateInt[0] day dateInt[1] month dateInt[2] year
 	totalDay := 0
 
 	for index := range text {
@@ -118,13 +118,13 @@ func IsDurationThirtyFirstDay(day int) bool {
 }
 
 func IsDurationLeapYear(day, month int) bool {
-	if month == 2 && day < 1 || day > 28 {
+	if month == 2 && (day < 1 || day > 28) {
 		return true
 	}
 	return false
 }
 func IsNotDurationLeapYear(day, month int) bool {
-	if month == 2 && day < 1 || day > 29 {
+	if month == 2 && (day < 1 || day > 29) {
 		return true
 	}
 	return false
